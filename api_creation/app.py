@@ -1,4 +1,4 @@
-from flask import Flask,request,url_for,render_template,redirect
+from flask import Flask,request,url_for,render_template,redirect,jsonify
 
 app=Flask(__name__)
 
@@ -43,6 +43,17 @@ def form():
         else:
             res="fail"
         return redirect(url_for(res,score=average))
+    
+# API Creation  we will do it using JSON 
+"""
+Use Postman 
+"""
+@app.route('/api',methods=['POST'])
+def calculate_sum():
+    data=request.get_json()
+    value_a=float(dict(data)['first'])
+    value_b=float(dict(data)['second'])
+    return jsonify(value_a+value_b)
 
 if __name__=="__main__":
     app.run(debug=True)
